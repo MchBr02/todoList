@@ -1,31 +1,26 @@
-// src/components/TodoClearCompleted.jsx
-
-import { useContext, useEffect, useState } from "react";
-import { TodoContext } from "state/todoContext";
+import { useContext, useEffect, useState } from 'react';
+import { TodoContext } from '../state/todoContext';
+import { clearCompleted } from '../api/todoApi';
 
 export const TodoClearCompleted = () => {
   const { todos, dispatch } = useContext(TodoContext);
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
-    const isAnyTodoCompleted = todos.some((todo) => todo.status === true);
-    setVisible(isAnyTodoCompleted);
+    const anyCompleted = todos.some(t => t.completed === true);
+    setVisible(anyCompleted);
   }, [todos]);
 
-  const handleClearCompleted = () => {
-    dispatch({
-      type: "clear",
-    });
+  const handleClearCompleted = async () => {
+    await clearCompleted();
+    dispatch({ type: 'clear' });
   };
 
   return (
     <>
       {visible && (
         <div className="todo-list__options">
-          <button
-            className="todo-list__options__button"
-            onClick={handleClearCompleted}
-          >
+          <button className="todo-list__options__button" onClick={handleClearCompleted}>
             Clear completed tasks
           </button>
         </div>
