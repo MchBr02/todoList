@@ -1,51 +1,30 @@
-// src/components/TodoAdd.jsx
-
-import { useContext } from "react";
-import { useForm } from "hooks/useForm";
-import { TodoContext } from "state/todoContext";
+import { useState, useContext } from 'react';
+import { TodoContext } from '../state/todoContext';
+import { addTodo } from '../api/todoApi';
 
 export const TodoAdd = () => {
-  const [{ task }, handleInputChange, reset] = useForm({
-    task: "",
-  });
-
+  const [task, setTask] = useState('');
   const { dispatch } = useContext(TodoContext);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!task.trim()) return;
 
-    if (task.trim().length === 0) {
-      return;
-    }
-
-    const todo = {
-      id: Date.now(),
-      task,
-      status: false,
-    };
-
-    dispatch({
-      type: "add",
-      payload: todo,
-    });
-
-    reset();
+    const newTodo = await addTodo({ task });
+    dispatch({ type: 'add', payload: newTodo });
+    setTask('');
   };
 
   return (
-    <form className="form">
+    <form className="form" onSubmit={handleSubmit}>
       <input
-        autoComplete="off"
-        className="form__input"
         type="text"
-        name="task"
-        placeholder="Add new task..."
+        className="form__input"
         value={task}
-        onChange={handleInputChange}
+        onChange={(e) => setTask(e.target.value)}
+        placeholder="Add new task..."
       />
-      <button className="form__button" type="submit" onClick={handleSubmit}>
-        +
-      </button>
+      <button className="form__button" type="submit">+</button>
     </form>
   );
 };
