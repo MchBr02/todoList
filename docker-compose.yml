@@ -1,0 +1,13 @@
+services:
+  todo-app:
+    build: .
+    container_name: react-todo-dev
+    ports:
+      - "3001:3000"  # host:container
+    volumes:
+      - .:/app           # sync code
+      - /app/node_modules  # avoid overwriting node_modules
+    stdin_open: true    # allows interactive use (e.g., Ctrl+C works)
+    tty: true
+    environment:
+      - CHOKIDAR_USEPOLLING=true  # improves file watching on some OS
