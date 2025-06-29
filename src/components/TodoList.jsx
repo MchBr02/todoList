@@ -1,38 +1,30 @@
-// src/components/TodoList.jsx
-
-import { useContext } from "react";
-import { TodoContext } from "state/todoContext";
-import { TodoListItem } from "components/TodoListItem";
+import { useContext } from 'react';
+import { TodoContext } from '../state/todoContext';
+import { TodoListItem } from './TodoListItem';
+import { updateTodo, deleteTodo } from '../api/todoApi';
 
 export const TodoList = () => {
   const { todos, dispatch } = useContext(TodoContext);
 
-  const handleToggle = (todoId) => {
-    dispatch({
-      type: "toggle",
-      payload: todoId,
-    });
+  const handleToggle = async (id) => {
+    const todo = todos.find(t => t.id === id);
+    await updateTodo(id, { completed: !todo.completed });
+    dispatch({ type: 'toggle', payload: id });
   };
 
-  const handleModify = (todo) => {
-    if (todo.task.trim().length === 0) return
-
-    dispatch({
-      type: "modify",
-      payload: todo,
-    });
+  const handleModify = async (todo) => {
+    const updated = await updateTodo(todo.id, { task: todo.task });
+    dispatch({ type: 'modify', payload: updated });
   };
 
-  const handleDelete = (todoId) => {
-    dispatch({
-      type: "delete",
-      payload: todoId,
-    });
+  const handleDelete = async (id) => {
+    await deleteTodo(id);
+    dispatch({ type: 'delete', payload: id });
   };
 
   return (
     <ul className="todo-list">
-      {todos.map((todo) => (
+      {todos.map(todo => (
         <TodoListItem
           key={todo.id}
           todo={todo}

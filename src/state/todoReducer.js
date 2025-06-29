@@ -3,25 +3,25 @@
 
 export const todoReducer = (state = [], action) => {
   switch (action.type) {
-    case "add":
+    case 'load':
+      return action.payload;
+    case 'add':
       return [...state, action.payload];
 
-    case "delete":
+    case 'delete':
       return state.filter((todo) => todo.id !== action.payload);
 
-    case "modify":
+    case 'modify':
       return state.map((todo) =>
-        todo.id === action.payload.id
-          ? { ...todo, task: action.payload.task }
-          : todo
+        todo.id === action.payload.id ? { ...todo, task: action.payload.task } : todo
       );
 
-    case "clear":
-      return state.filter((todo) => todo.status !== true);
+    case 'clear':
+      return state.filter((todo) => !todo.completed);
 
-    case "toggle":
+    case 'toggle':
       return state.map((todo) =>
-        todo.id === action.payload ? { ...todo, status: !todo.status } : todo
+        todo.id === action.payload ? { ...todo, completed: !todo.completed } : todo
       );
 
     default:
