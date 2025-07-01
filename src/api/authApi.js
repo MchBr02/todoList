@@ -13,3 +13,4 @@ export const loginUser = (email, password) =>
     method: 'POST',
     body: { email, password },
   });
+  

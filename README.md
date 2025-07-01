@@ -11,7 +11,7 @@ This project includes a React frontend and a simple Express backend. Docker Comp
 docker-compose up --build
 ```
 
-The frontend will be available on [http://localhost:3001](http://localhost:3001) and the backend API on [http://localhost:4001/api/todos](http://localhost:4001/api/todos).
+The frontend will be available on [http://localhost:3000](http://localhost:3000) and the backend API on [http://localhost:4000/api/todos](http://localhost:4000/api/todos).
 
 ## Development without Docker
 

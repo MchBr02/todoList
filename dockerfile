@@ -4,9 +4,6 @@ FROM node:18
 # Set working directory
 WORKDIR /app
 
-ARG VITE_API_BASE
-ENV VITE_API_BASE=$VITE_API_BASE
-
 # Install dependencies first to leverage Docker layer caching
 COPY package*.json ./
 RUN npm install
