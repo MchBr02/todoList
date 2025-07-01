@@ -1,37 +1,46 @@
-import { getToken } from '../utils/authToken';
+// src/api/todoApi.js
 
-const headers = () => ({
-  'Content-Type': 'application/json',
-  Authorization: `Bearer ${getToken()}`,
+import { getToken } from '../utils/authToken';
+import { apiClient } from './apiClient';
+
+const authHeader = () => {
+  const stored = getToken();
+  return {
+    Authorization: `Bearer ${stored?.token}`,
+  };
+};
+
+export const fetchTodos = () =>
+  apiClient('/api/todos', { headers: authHeader() });
+
+export const addTodo = (todo) =>
+  apiClient('/api/todos', {
+    method: 'POST',
+    headers: authHeader(),
+    body: todo,
+  });
+
+export const updateTodo = (id, todo) =>
+  apiClient(`/api/todos/${id}`, {
+    method: 'PUT',
+    headers: authHeader(),
+    body: todo,
+  });
+
+export const deleteTodo = (id) =>
+  apiClient(`/api/todos/${id}`, {
+    method: 'DELETE',
+    headers: authHeader(),
+  });
+
+export const clearCompleted = () =>
+apiClient('/api/todos/completed', {
+  method: 'DELETE',
+  headers: authHeader(),
 });
 
-export const fetchTodos = async () => {
-  const res = await fetch('/api/todos', { headers: headers() });
-  return res.json();
-};
-
-export const addTodo = async (todo) => {
-  const res = await fetch('/api/todos', {
-    method: 'POST',
-    headers: headers(),
-    body: JSON.stringify(todo),
-  });
-  return res.json();
-};
-
-export const updateTodo = async (id, todo) => {
-  const res = await fetch(`/api/todos/${id}`, {
-    method: 'PUT',
-    headers: headers(),
-    body: JSON.stringify(todo),
-  });
-  return res.json();
-};
-
-export const deleteTodo = async (id) => {
-  await fetch(`/api/todos/${id}`, { method: 'DELETE', headers: headers() });
-};
-
-export const clearCompleted = async () => {
-  await fetch('/api/todos/completed', { method: 'DELETE', headers: headers() });
-};
+export const updateShareSetting = (enabled) =>
+apiClient('/api/auth/share', {
+  method: 'PUT',
+  body: { enabled },
+});

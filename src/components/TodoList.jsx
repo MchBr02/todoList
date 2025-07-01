@@ -1,3 +1,5 @@
+// src/components/TodoList.jsx
+
 import { useContext } from 'react';
 import { TodoContext } from '../state/todoContext';
 import { TodoListItem } from './TodoListItem';
@@ -8,8 +10,12 @@ export const TodoList = () => {
 
   const handleToggle = async (id) => {
     const todo = todos.find(t => t.id === id);
-    await updateTodo(id, { completed: !todo.completed });
-    dispatch({ type: 'toggle', payload: id });
+    console.log('[TOGGLE] Clicked todo:', todo);
+
+    const updated = await updateTodo(id, { completed: !todo.completed });
+    console.log('[TOGGLE] Updated from server:', updated);
+
+    dispatch({ type: 'modify', payload: updated });
   };
 
   const handleModify = async (todo) => {

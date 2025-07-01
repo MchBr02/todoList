@@ -1,5 +1,19 @@
-const KEY = 'auth_token';
+// src/utils/authToken.js
 
-export const getToken = () => localStorage.getItem(KEY);
-export const setToken = (token) => localStorage.setItem(KEY, token);
-export const removeToken = () => localStorage.removeItem(KEY);
+export const setToken = (token, shareId) => {
+  const data = { token, shareId };
+  localStorage.setItem('auth_data', JSON.stringify(data));
+};
+
+export const getToken = () => {
+  try {
+    const data = JSON.parse(localStorage.getItem('auth_data'));
+    return data && data.token ? data : null;
+  } catch {
+    return null;
+  }
+};
+
+export const removeToken = () => {
+  localStorage.removeItem('auth_data');
+};

@@ -1,6 +1,8 @@
+// src/components/TodoClearCompleted.jsx
+
 import { useContext, useEffect, useState } from 'react';
 import { TodoContext } from '../state/todoContext';
-import { clearCompleted } from '../api/todoApi';
+import { clearCompleted, fetchTodos } from '../api/todoApi';
 
 export const TodoClearCompleted = () => {
   const { todos, dispatch } = useContext(TodoContext);
@@ -13,7 +15,8 @@ export const TodoClearCompleted = () => {
 
   const handleClearCompleted = async () => {
     await clearCompleted();
-    dispatch({ type: 'clear' });
+    const data = await fetchTodos(); // <- pobiera z backendu aktualne dane
+    dispatch({ type: 'load', payload: data });
   };
 
   return (

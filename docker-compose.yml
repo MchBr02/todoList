@@ -1,10 +1,10 @@
-version: "3"
+version: "3.4"
 services:
   frontend:
     build: .
     container_name: react-todo-dev
     ports:
-      - "3001:3000"  # host:container
+      - "3000:3000"  # host:container
     volumes:
       - .:/app           # sync code
       - /app/node_modules  # avoid overwriting node_modules
@@ -20,7 +20,7 @@ services:
       context: ./server
     container_name: todo-backend
     ports:
-      - "4001:4000"
+      - "4000:4000"
     volumes:
       - ./server:/app
       - /app/node_modules

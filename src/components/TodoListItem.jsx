@@ -28,7 +28,7 @@ export const TodoListItem = ({
   return (
     <li
       className={`todo-list__item ${
-        todo.status ? "todo-list__item--completed" : ""
+        todo.completed ? "todo-list__item--completed" : ""
       } ${editMode ? "todo-list__item--editing" : ""}`}
     >
       {!editMode && (

@@ -1,5 +1,4 @@
 // src/state/todoReducer.js
-// Reducer function for todo actions (add, delete, modify, toggle, clear).
 
 export const todoReducer = (state = [], action) => {
   switch (action.type) {
@@ -13,7 +12,7 @@ export const todoReducer = (state = [], action) => {
 
     case 'modify':
       return state.map((todo) =>
-        todo.id === action.payload.id ? { ...todo, task: action.payload.task } : todo
+        todo.id === action.payload.id ? { ...todo, ...action.payload } : todo
       );
 
     case 'clear':

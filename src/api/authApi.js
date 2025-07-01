@@ -1,17 +1,15 @@
-export const registerUser = async (email, password) => {
-  const res = await fetch('/api/auth/register', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ email, password }),
-  });
-  return res.json();
-};
+// src/api/authApi.js
 
-export const loginUser = async (email, password) => {
-  const res = await fetch('/api/auth/login', {
+import { apiClient } from './apiClient';
+
+export const registerUser = (email, password) =>
+  apiClient('/api/auth/register', {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ email, password }),
+    body: { email, password },
   });
-  return res.json();
-};
+
+export const loginUser = (email, password) =>
+  apiClient('/api/auth/login', {
+    method: 'POST',
+    body: { email, password },
+  });

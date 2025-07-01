@@ -1,20 +1,31 @@
+// src/auth/LoginPage.jsx
+
 import { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate, Link, Navigate } from 'react-router-dom';
 import { useAuth } from './useAuth';
 
 export const LoginPage = () => {
-  const { login } = useAuth();
+  const { login, user } = useAuth();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
 
+  if (user?.token) {
+    return <Navigate to="/todos" replace />;
+  }
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const result = await login(email, password);
-    if (result.token) {
-      navigate('/todos');
-    } else {
-      alert('Invalid credentials');
+    try {
+      const result = await login(email, password);
+      if (result.token) {
+        console.log('✅ Login successful, navigating...');
+        navigate('/todos');
+      } else {
+        alert(result.message || 'Invalid credentials');
+      }
+    } catch (err) {
+      alert(err.message || 'Login failed');
     }
   };
 
