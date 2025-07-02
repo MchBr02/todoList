@@ -1,4 +1,4 @@
-// src/state/todoReducer.js
+// frontend/src/state/todoReducer.js
 
 export const todoReducer = (state = [], action) => {
   switch (action.type) {

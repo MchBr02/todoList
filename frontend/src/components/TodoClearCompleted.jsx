@@ -1,4 +1,4 @@
-// src/components/TodoClearCompleted.jsx
+// frontend/src/components/TodoClearCompleted.jsx
 
 import { useContext, useEffect, useState } from 'react';
 import { TodoContext } from '../state/todoContext';

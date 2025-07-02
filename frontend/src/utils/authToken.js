@@ -1,4 +1,4 @@
-// src/utils/authToken.js
+// frontend/src/utils/authToken.js
 
 export const setToken = (token, shareId) => {
   const data = { token, shareId };

@@ -1,4 +1,4 @@
-// src/components/LogoutButton.jsx
+// frontend/src/components/LogoutButton.jsx
 
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../auth/useAuth';

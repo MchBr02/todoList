@@ -1,4 +1,4 @@
-// src/auth/RequireAuth.js
+// frontend/src/auth/RequireAuth.js
 
 import { Navigate } from 'react-router-dom';
 import { useAuth } from './useAuth';

@@ -1,4 +1,4 @@
-// src/pages/SharedTodoPage.jsx
+// frontend/src/pages/SharedTodoPage.jsx
 
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';

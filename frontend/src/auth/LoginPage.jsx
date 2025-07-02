@@ -1,4 +1,4 @@
-// src/auth/LoginPage.jsx
+// frontend/src/auth/LoginPage.jsx
 
 import { useState } from 'react';
 import { useNavigate, Link, Navigate } from 'react-router-dom';

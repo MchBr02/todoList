@@ -1,4 +1,4 @@
-// src/auth/AuthProvider.js
+// frontend/src/auth/AuthProvider.js
 
 import { AuthContext } from './AuthContext';
 import { useProvideAuth } from './useAuth';

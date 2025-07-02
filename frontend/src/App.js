@@ -1,3 +1,5 @@
+// frontend/src/App.js
+
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { LoginPage } from './auth/LoginPage';
 import { RegisterPage } from './auth/RegisterPage';

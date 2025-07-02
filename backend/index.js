@@ -1,4 +1,4 @@
-// server/index.js
+// backend/index.js
 
 const express = require('express');
 const cors = require('cors');
@@ -124,10 +124,16 @@ app.delete('/api/todos/completed', authMiddleware, (req, res) => {
 
 // Return current status
 app.get('/api/auth/share', authMiddleware, (req, res) => {
-  console.log('[ENDPOINT] GET  /api/auth/share | userId:', req.userId);
+  console.log('[ENDPOINT] GET /api/auth/share');
+  console.log('[AUTH USER ID]', req.userId);
+  console.log('[ALL USERS]', users);
 
   const user = users.find(u => u.id === req.userId);
-  if (!user) return res.sendStatus(404);
+  console.log('[AUTH CHECK] Matching user:', user);
+  if (!user) {
+    console.warn('[ERROR] User not found!');
+    return res.sendStatus(404);
+  }
 
   res.json({ enabled: user.shareEnabled });
 });

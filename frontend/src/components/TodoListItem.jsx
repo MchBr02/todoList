@@ -1,4 +1,4 @@
-// src/components/TodoListItem.jsx
+// frontend/src/components/TodoListItem.jsx
 
 import { useEffect, useRef, useState } from "react";
 import { BiSave, BiBlock, BiPencil, BiTrash } from "react-icons/bi";

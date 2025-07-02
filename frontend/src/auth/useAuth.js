@@ -1,4 +1,4 @@
-// src/auth/useAuth.js
+// frontend/src/auth/useAuth.js
 
 import { useState, useEffect } from 'react';
 import { getToken, setToken, removeToken } from '../utils/authToken';

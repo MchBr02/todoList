@@ -1,4 +1,4 @@
-// src/api/authApi.js
+// frontend/src/api/authApi.js
 
 import { apiClient } from './apiClient';
 

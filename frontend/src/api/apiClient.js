@@ -1,4 +1,4 @@
-// src/api/apiClient.js
+// frontend/src/api/apiClient.js
 
 import { getToken } from '../utils/authToken';
 
