@@ -8,7 +8,7 @@ import { TodoContext } from '../state/todoContext';
 import { TodoAdd } from '../components/TodoAdd';
 import { TodoList } from '../components/TodoList';
 import { TodoClearCompleted } from '../components/TodoClearCompleted';
-import { fetchTodos, updateShareSetting } from '../api/todoApi';
+import { fetchTodos, updateShareSetting, fetchShareSetting } from '../api/todoApi';
 import { useAuth } from '../auth/useAuth';
 import { LogoutButton } from '../components/LogoutButton';
 
@@ -26,6 +26,15 @@ export const TodoPage = () => {
     const load = async () => {
       const data = await fetchTodos();
       dispatch({ type: 'load', payload: data });
+
+      //pull current share flag
+      try {
+        const { enabled } = await fetchShareSetting();
+        setShowShareLink(Boolean(enabled));
+        console.log('[SHARE] Initial state from server:', enabled);
+      } catch (err) {
+        console.warn('[SHARE] Could not fetch share flag:', err.message);
+      }
     };
     load();
   }, [user, navigate]);
@@ -63,7 +72,9 @@ export const TodoPage = () => {
               />{' '}
               Share link: {displayUrl}
             </p>
-            <LogoutButton />
+            <p>
+              <LogoutButton />
+            </p>
           </>
         )}
 

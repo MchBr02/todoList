@@ -109,6 +109,9 @@ app.get('/api/share/:shareId', (req, res) => {
   res.json(user.todos);
 });
 
+// Healthcheck
+app.get('/api/health', (req, res) => res.send('OK'));
+
 app.delete('/api/todos/completed', authMiddleware, (req, res) => {
   console.log('[ENDPOINT] DELETE /api/todos/completed | userId:', req.userId);
   const user = users.find(u => u.id === req.userId);
@@ -117,6 +120,16 @@ app.delete('/api/todos/completed', authMiddleware, (req, res) => {
   const after = user.todos.length;
   console.log(`[TODO DELETE] Removed ${before - after} todos (before: ${before}, after: ${after})`);
   res.sendStatus(204);
+});
+
+// Return current status
+app.get('/api/auth/share', authMiddleware, (req, res) => {
+  console.log('[ENDPOINT] GET  /api/auth/share | userId:', req.userId);
+
+  const user = users.find(u => u.id === req.userId);
+  if (!user) return res.sendStatus(404);
+
+  res.json({ enabled: user.shareEnabled });
 });
 
 app.delete('/api/todos/:id', authMiddleware, (req, res) => {
@@ -143,6 +156,7 @@ app.put('/api/todos/:id', authMiddleware, (req, res) => {
   res.json(todo);
 });
 
+ // Toggle sharing
 app.put('/api/auth/share', authMiddleware, (req, res) => {
   console.log('[ENDPOINT] PUT /api/auth/share | userId:', req.userId);
   const { enabled } = req.body;

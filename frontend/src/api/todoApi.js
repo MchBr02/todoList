@@ -44,3 +44,9 @@ apiClient('/api/auth/share', {
   method: 'PUT',
   body: { enabled },
 });
+
+export const fetchShareSetting = () =>
+  apiClient('/api/auth/share', {
+    headers: authHeader(),
+});
+

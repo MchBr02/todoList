@@ -1,26 +1,42 @@
-version: "3.4"
 services:
-  frontend:
-    build: .
-    container_name: react-todo-dev
-    ports:
-      - "3000:3000"  # host:container
+  frontend-build:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+      target: export
+    image: todo-frontend-export:latest
+    container_name: todo-frontend
+    command: ["/bin/sh", "-c", "cp -r /export/* /output && echo ✅ build copied"]
     volumes:
-      - .:/app           # sync code
-      - /app/node_modules  # avoid overwriting node_modules
-    stdin_open: true    # allows interactive use (e.g., Ctrl+C works)
-    tty: true
-    environment:
-      - CHOKIDAR_USEPOLLING=true  # improves file watching on some OS
-    depends_on:
-      - backend
+      - ./frontend/build:/output
+    restart: "no"
 
   backend:
     build:
-      context: ./server
+      context: ./backend
+    image: todo-backend:latest
     container_name: todo-backend
+    restart: unless-stopped
     ports:
       - "4000:4000"
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:4000/api/health || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  nginx:
+    build:
+      context: ./nginx
+    image: todo-nginx:latest
+    container_name: todo-nginx
+    ports:
+      - "80:80"
     volumes:
-      - ./server:/app
-      - /app/node_modules
+      - ./frontend/build:/usr/share/nginx/html
+      - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
